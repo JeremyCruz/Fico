@@ -16,13 +16,13 @@ public class Institution {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInstitution;
 	
-	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre del producto no puede contener simbolos")
-	@Pattern(regexp = "[^0-9]+", message = "El nombre del producto no puede contener un número")
+	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre de la institucion no puede contener simbolos")
+	@Pattern(regexp = "[^0-9]+", message = "El nombre de la institucion no puede contener un número")
 	@Column(name = "nameInstitution", length = 40, nullable = false)
 	private String nameInstitution;
 
-	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre del producto no puede contener simbolos")
-	@Pattern(regexp = "[^0-9]+", message = "El nombre del producto no puede contener un número")
+	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El tipo de institucion no puede contener simbolos")
+	@Pattern(regexp = "[^0-9]+", message = "El tipo de institucion no puede contener un número")
 	@Column(name = "typeInstitution", length = 40, nullable = false)
 	private String typeInstitution;
 	
