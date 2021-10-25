@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Institution")
@@ -14,14 +15,19 @@ public class Institution {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idInstitution;
-
+	
+	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre del producto no puede contener simbolos")
+	@Pattern(regexp = "[^0-9]+", message = "El nombre del producto no puede contener un número")
 	@Column(name = "nameInstitution", length = 40, nullable = false)
 	private String nameInstitution;
 
+	@Pattern(regexp = "[^!\"#$%&'()*+,-./:;<=>?@^_`{|}~]+", message = "El nombre del producto no puede contener simbolos")
+	@Pattern(regexp = "[^0-9]+", message = "El nombre del producto no puede contener un número")
 	@Column(name = "typeInstitution", length = 40, nullable = false)
 	private String typeInstitution;
-
-	@Column(name = "urlInstitution", length = 100, nullable = false)
+	
+	@Pattern(regexp = "[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)", message = "Formato url sin http://")
+	@Column(name = "urlInstitution", length = 30, nullable = false)
 	private String urlInstitution;
 	
 
