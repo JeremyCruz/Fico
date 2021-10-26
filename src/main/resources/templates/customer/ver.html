@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,36 +14,45 @@
 <link rel="stylesheet" href="/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/dive.css">
 </head>
+
 <body>
 
-	<div th:fragment="sidebar" id="panel" class="activepanel ">
-		<div id="cpanel1head" style="background-color:#4BB543; margin: 10px; height: 7vh;" class="row">
-			<h2 id="titulopanel" class="col-lg-10">Navegación</h2>
-			<i id="iconpanel" class="fa fa-navicon col-lg-2"></i>
-		</div>
-		<div id="cpanelbody" class="row">
+	<div th:replace="fragments/sidebar :: sidebar" id="panel"
+		class="activepanel"></div>
 
-			<div class="panelitem">
-				<a th:href="@{/customers/home}"> <i class="fa fa-home"
-					style="color: #4BB543;"></i>
-				</a>
-				<p>Inicio</p>
-			</div>
+	<div class="bg row">
+		<div th:replace="fragments/nav :: nav" class="row topbar col-lg-12"></div>
 
-			<div class="panelitem">
-				<a th:href="@{/customers/list}"> <i class="fa fa-user-circle" 
-					style="color: #4BB543;"></i>
-				</a>
-				<p>Registro</p>
-			</div>
-			
-			<div class="panelitem">
-				<a th:href="@{/roles/list}"> <i class="fa fa-user-secret"
-					style="color: #4BB543;"></i>
-				</a>
-				<p>Roles</p>
+
+		<div class="content container" style="margin-right: 200px;">
+
+			<div class="detail" style="height: 250px; width: 700px; background-color: black;">
+				<img class="detailimg" style="height: 250px; width: 250px;"
+					th:if="${#strings.length(customer.photoCustomer)> 0}"
+					th:src="@{'/customers/uploads/' + ${customer.photoCustomer}}"
+					th:alt="${customer.photoCustomer}">
+
+					<div class="detalles">
+						<a th:href="@{/customers/list}"  href=""><i
+							class="btn btn-success" style="margin: 10px; margin-left: 630px;">Atras</i></a>
+						<h1 th:text="${customer.nameCustomer}" class="name" style="margin-left: 300px;"></h1>
+						<h4 th:text="${'Dni: ' + customer.dniCustomer}" class="dni" style="margin-left: 300px;"></h4>
+						<h4 th:text="${'Edad: ' +customer.ageCustomer}" class="age" style="margin-left: 300px;"></h4>
+						<h4 th:text="${'Rol: ' +customer.rol.typeRol}" class="rol" style="margin-left: 300px;"></h4>
+					</div>
 			</div>
 		</div>
+
 	</div>
+
+
+
+
+
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/jquery-3.3.1.slim.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/dive.js"></script>
 </body>
+
 </html>
