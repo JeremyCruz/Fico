@@ -158,15 +158,24 @@ public class CustomerController {
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, RedirectAttributes objRedir) {
 
-		Customer objPro = cS.listarId(id);
-		if (objPro == null) {
+		Customer customer = cS.listarId(id);
+		if (customer == null) {
 			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
 			return "redirect:/customer/list";
 		} else {
 			model.addAttribute("listaRoles", rS.list());
-			model.addAttribute("customer", objPro);
+			model.addAttribute("customer", customer);
 			return "customer/customer";
 		}
+	}
+	
+	@GetMapping("/eliminar/{id}")
+	public String delete(@PathVariable("id") int id) {
+
+		cS.delete(id);
+		System.out.println("Registro eliminado");
+		
+		return "redirect:/customers/list";
 	}
 
 }

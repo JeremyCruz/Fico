@@ -29,5 +29,11 @@ public class RolServiceImpl implements IRolService{
 		// TODO Auto-generated method stub
 		return rR.findAll();
 	}
+
+	@Override
+	public void delete(int id) {
+		rR.deleteById(id);
+		
+	}
 	
 }

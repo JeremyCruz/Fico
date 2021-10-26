@@ -12,5 +12,7 @@ public interface ICustomerService {
 	
 	List<Customer> list();
 	
+	public void delete(int id);
+	
 	Customer listarId(int idCustomer);
 }

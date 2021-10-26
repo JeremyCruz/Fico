@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
@@ -54,6 +55,15 @@ public class RolController {
 			}
 		}
 		model.addAttribute("rol", new Rol());
+		return "redirect:/roles/list";
+	}
+	
+	@GetMapping("/eliminar/{id}")
+	public String delete(@PathVariable("id") int id) {
+
+		rS.delete(id);
+		System.out.println("Rol eliminado");
+		
 		return "redirect:/roles/list";
 	}
 }

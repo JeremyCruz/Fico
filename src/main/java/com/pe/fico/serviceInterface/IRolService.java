@@ -8,5 +8,7 @@ public interface IRolService {
 
 	public Integer insert(Rol rol);
 	
+	public void delete(int id);
+	
 	List<Rol> list();
 }

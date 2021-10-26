@@ -48,4 +48,10 @@ public class CustomerServiceImpl implements ICustomerService{
 		return rpta;
 	}
 
+	@Override
+	public void delete(int id) {
+		cR.deleteById(id);
+		
+	}
+
 }
