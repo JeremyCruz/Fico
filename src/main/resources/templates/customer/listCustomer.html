@@ -37,7 +37,8 @@
 						<th scope="col" class="text-center">EDAD</th>
 						<th scope="col" class="text-center">CIUDAD</th>
 						<th scope="col" class="text-center">ROL</th>
-						<th scope="col" class="text-center">OPERACIÓN</th>
+						<th scope="col" class="text-center">OPERACION</th>
+						<th scope="col" class="text-center">OPERACION</th>
 						<th scope="col" class="text-center">DETALLE</th>
 					</tr>
 				</thead>
@@ -51,7 +52,8 @@
 						<td class="text-center" th:text="${c.ageCustomer}"></td>
 						<td class="text-center" th:text="${c.cityCustomer}"></td>
 						<td class="text-center" th:text="${c.rol.typeRol}"></td>
-						<td class="text-center"><a th:href="@{'/customers/update/' + ${c.idCustomer}}"><i class="fa fa-edit" style="color: #4BB543;"></i></a></td>
+						<td class="text-center"><a th:href="@{'/customers/update/' + ${c.idCustomer}}"><i class="btn btn-link" style="color: #4BB543;">Editar</i></a></td>
+						<td class="text-center"><a th:href="@{'/customers/eliminar/' + ${c.idCustomer}}"><i class="btn btn-link" style="color: #4BB543;">Eliminar</i></a></td>
 						<td class="text-center" align="center"><a
 							th:href="@{/customers/view/} + ${c.idCustomer}">
 							
