@@ -25,8 +25,26 @@
 		<div class="content container">
 
 			<div class="d-flex">
-				<h3 class="title-content" style="color: #4BB543;">Lista de Registrados</h3>
-				<a th:href="@{/customers/new}" class="btn btn-success" style="margin: 10px">Nuevo</a>
+				<h3 class="title-content" style="color: #4BB543;">Lista de
+					Registrados</h3>
+
+				<form th:action="@{/customers/search}" method="post"
+					th:object="${customer}"
+					style="margin-top: 20px; margin-bottom: 20px;">
+
+						<label for="nameCustomer">Buscar:</label><input type="text"
+							required="required" class="form-control"
+							th:field="*{nameCustomer}" id="nameCustomer"></input>
+							
+					<div >
+						<button type="submit" class="btn btn-outline-success">Buscar</button>
+						<a href="/customers/list" class="btn btn-outline-success">Limpiar</a>
+					</div>
+				</form>
+
+
+				<a th:href="@{/customers/new}" class="btn btn-success"
+					style="margin: 10px">Nuevo</a>
 			</div>
 			<table class="table">
 				<thead class="thead-light">
@@ -37,8 +55,8 @@
 						<th scope="col" class="text-center">EDAD</th>
 						<th scope="col" class="text-center">CIUDAD</th>
 						<th scope="col" class="text-center">ROL</th>
-						<th scope="col" class="text-center">OPERACION</th>
-						<th scope="col" class="text-center">OPERACION</th>
+						<th scope="col" class="text-center">MODIFICAR</th>
+						<th scope="col" class="text-center">ELIMINAR</th>
 						<th scope="col" class="text-center">DETALLE</th>
 					</tr>
 				</thead>
@@ -52,21 +70,24 @@
 						<td class="text-center" th:text="${c.ageCustomer}"></td>
 						<td class="text-center" th:text="${c.cityCustomer}"></td>
 						<td class="text-center" th:text="${c.rol.typeRol}"></td>
-						<td class="text-center"><a th:href="@{'/customers/update/' + ${c.idCustomer}}"><i class="btn btn-link" style="color: #4BB543;">Editar</i></a></td>
-						<td class="text-center"><a th:href="@{'/customers/eliminar/' + ${c.idCustomer}}"><i class="btn btn-link" style="color: #4BB543;">Eliminar</i></a></td>
+						<td class="text-center"><a
+							th:href="@{'/customers/update/' + ${c.idCustomer}}"><i
+								class="fa fa-refresh" style="color: #4BB543;"></i></a></td>
+						<td class="text-center"><a
+							th:href="@{/customers/delete?id=} + ${c.idCustomer}"><i
+								class="fa fa-times-circle" style="color: #4BB543;"></i></a></td>
 						<td class="text-center" align="center"><a
-							th:href="@{/customers/view/} + ${c.idCustomer}">
-							
-							<i class="fa fa-eye" style="color: black;"></i>
-							</a></td>
+							th:href="@{/customers/view/} + ${c.idCustomer}"> <i
+								class="fa fa-eye" style="color: black;"></i>
+						</a></td>
 					</tr>
 				</tbody>
 			</table>
 			<div th:if="${mensaje}" class="alert alert-danger">
-			<p th:text="${mensaje}"></p>
+				<p th:text="${mensaje}"></p>
+			</div>
 		</div>
-		</div>
-		
+
 
 	</div>
 

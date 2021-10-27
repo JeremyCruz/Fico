@@ -39,6 +39,11 @@
 					<div class="col-5">
 
 						<div class="form-group">
+							<label>ID:</label> <input type="text" class="form-control"
+								readonly th:field="*{idCustomer}"></input>
+						</div>
+
+						<div class="form-group">
 							<label for="nombre">NOMBRE:</label> <input type="text" required
 								th:field="*{nameCustomer}" class="form-control" id="nombre"
 								placeholder="ingresa tu nombre"></input>
@@ -79,8 +84,13 @@
 								th:errors="*{cityCustomer}"></div>
 						</div>
 
-
 						<div class="form-group">
+							<label for="file" class="">FOTO:</label> <input type="file"
+								name="file" class="form-control"
+								th:text="${customer.photoCustomer}"></input>
+						</div>
+
+						<div class="form-group" style="visibility: hidden">
 							<label for="rol">ROL:</label> <select class="form-control"
 								th:field="*{rol.idRol}">
 								<option th:each="c: ${listaRoles}" th:value="${c.idRol}"
@@ -90,19 +100,14 @@
 						</div>
 
 
-						<div class="form-group">
-							<label for="file" class="">FOTO:</label> <input type="file"
-								name="file" class="form-control"
-								th:text="${customer.photoCustomer}"></input>
-						</div>
-
 					</div>
 
-					<div style="margin-left: 215px;">
+					<div style="margin-left: 215px">
 						<button style="margin: 10px;" type="submit"
 							class="btn btn-outline-success">Aceptar</button>
 						<a href="/customers/list" class="btn btn-outline-success">Cancelar</a>
 					</div>
+
 
 				</form>
 

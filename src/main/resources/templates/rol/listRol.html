@@ -31,14 +31,18 @@
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
-						<th scope="col" class="text-center">Código</th>
-						<th scope="col" class="text-center">Nombre</th>
+						<th scope="col" class="text-center">CODIGO</th>
+						<th scope="col" class="text-center">NOMBRE</th>
+						<th scope="col" class="text-center">MODIFICAR</th>
+						<th scope="col" class="text-center">ELIMINAR</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="rol : ${listaRoles}">
 						<td class="text-center" th:text="${rol.idRol}"></td>
 						<td class="text-center" th:text="${rol.typeRol}"></td>
+						<td class="text-center"><a th:href="@{'/roles/update/' + ${rol.idRol}}"><i class="fa fa-refresh" style="color: #4BB543;"></i></a></td>
+						<td class="text-center"><a th:href="@{/roles/delete?id=} + ${rol.idRol}"><i class="fa fa-times-circle" style="color: #4BB543;"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

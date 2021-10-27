@@ -14,8 +14,11 @@
 </head>
 <body>
 
+
 	<div th:fragment="sidebar" id="panel" class="activepanel ">
-		<div id="cpanel1head" style="background-color:#4BB543; margin: 10px; height: 7vh;" class="row">
+		<div id="cpanel1head"
+			style="background-color: #4BB543; margin: 10px; height: 7vh;"
+			class="row">
 			<h2 id="titulopanel" class="col-lg-10">Navegación</h2>
 			<i id="iconpanel" class="fa fa-navicon col-lg-2"></i>
 		</div>
@@ -29,12 +32,12 @@
 			</div>
 
 			<div class="panelitem">
-				<a th:href="@{/customers/list}"> <i class="fa fa-user-circle" 
+				<a th:href="@{/customers/list}"> <i class="fa fa-user-circle"
 					style="color: #4BB543;"></i>
 				</a>
 				<p>Registro</p>
 			</div>
-			
+
 			<div class="panelitem">
 				<a th:href="@{/roles/list}"> <i class="fa fa-user-secret"
 					style="color: #4BB543;"></i>
@@ -43,5 +46,6 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>
