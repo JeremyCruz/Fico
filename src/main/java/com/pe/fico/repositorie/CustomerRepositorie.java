@@ -1,5 +1,7 @@
 package com.pe.fico.repositorie;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +14,6 @@ public interface CustomerRepositorie extends JpaRepository<Customer, Integer>{
 
 	@Query("select count(c.dniCustomer) from Customer c where c.dniCustomer = :name ")
 	public int buscarDNI(@Param("name") String name);
+	
+	List<Customer> findByNameCustomer(String name);
 }

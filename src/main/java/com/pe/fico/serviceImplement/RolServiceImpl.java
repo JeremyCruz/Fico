@@ -1,6 +1,7 @@
 package com.pe.fico.serviceImplement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,5 +36,11 @@ public class RolServiceImpl implements IRolService{
 		rR.deleteById(id);
 		
 	}
+
+	@Override
+	public Optional<Rol> listarId(int id) {
+		return rR.findById(id);
+	}
+	
 	
 }

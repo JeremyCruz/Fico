@@ -1,5 +1,7 @@
 package com.pe.fico.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.pe.fico.entities.Rol;
 import com.pe.fico.serviceInterface.IRolService;
@@ -58,12 +62,31 @@ public class RolController {
 		return "redirect:/roles/list";
 	}
 	
-	@GetMapping("/eliminar/{id}")
-	public String delete(@PathVariable("id") int id) {
+	@RequestMapping("/delete")
+	public String delete(@RequestParam(value = "id") Integer id, Model model) {
 
-		rS.delete(id);
-		System.out.println("Rol eliminado");
-		
-		return "redirect:/roles/list";
+		try {
+			if (id != null && id > 0) {
+				rS.delete(id);
+			}
+		} catch (Exception e) {
+			System.out.println("Error al eliminar");
+		}
+		model.addAttribute("listaRoles", rS.list());
+		return "rol/listRol";
+
+	}
+	
+	@RequestMapping("/update/{id}")
+	public String update(@PathVariable int id, Model model, RedirectAttributes objRedir) {
+
+		Optional<Rol> rol = rS.listarId(id);
+		if (rol == null) {
+			objRedir.addFlashAttribute("mensaje", "Ocurrio un error");
+			return "rol/rol";
+		} else {
+			model.addAttribute("rol", rol);
+			return "rol/rol";
+		}
 	}
 }

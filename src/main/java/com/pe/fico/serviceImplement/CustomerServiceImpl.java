@@ -54,4 +54,10 @@ public class CustomerServiceImpl implements ICustomerService{
 		
 	}
 
+	@Override
+	public List<Customer> findByNameCustomer(String name) {
+		
+		return cR.findByNameCustomer(name);
+	}
+
 }

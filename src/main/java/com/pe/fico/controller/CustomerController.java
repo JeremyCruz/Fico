@@ -3,6 +3,7 @@ package com.pe.fico.controller;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -45,7 +46,7 @@ public class CustomerController {
 	public String newCustomer(Model model) {
 		model.addAttribute("customer", new Customer());
 		model.addAttribute("listaRoles", rS.list());
-		model.addAttribute("products", new Customer());
+		model.addAttribute("customer", new Customer());
 		return "customer/customer";
 	}
 	
@@ -90,15 +91,15 @@ public class CustomerController {
 				flash.addFlashAttribute("info", "Has subido correctamente '" + uniqueFilename + "'");
 				customer.setPhotoCustomer(uniqueFilename);
 			}
-			int rpta = cS.insertDni(customer);
-			if (rpta > 0) {
-				model.addAttribute("mensaje", "El DNI ingresado ya existe");
-				model.addAttribute("listaRoles", rS.list());
-				return "customer/customer";
-			} else {
-				model.addAttribute("mensaje", "Se guardó correctamente");
-				status.setComplete();
-			}
+			//int rpta = cS.insertDni(customer);
+			//if (rpta > 0) {
+				//model.addAttribute("mensaje", "El DNI ingresado ya existe");
+				//model.addAttribute("listaRoles", rS.list());
+				//return "customer/customer";
+			//} else {
+				//model.addAttribute("mensaje", "Se guardó correctamente");
+				//status.setComplete();
+			//}
 			boolean flag = cS.insert(customer);
 			if (flag) {
 				return "redirect:/customers/list";
@@ -141,41 +142,54 @@ public class CustomerController {
 		return "customer/ver";
 	}
 
-	@RequestMapping("/list")
-	public String listCustomer(Map<String, Object> model) {
-		model.put("listaCustomers", cS.list());
-		return "customer/listCustomer";
+	//@RequestMapping("/list")
+	//public String listCustomer(Map<String, Object> model) {
+		//model.put("listaCustomers", cS.list());
+		//return "customer/listCustomer";
+	//}
 
-	}
-
-	@RequestMapping("/listarId")
-	public String listarId(Map<String, Object> model, @ModelAttribute Customer cus) {
-		cS.listarId(cus.getIdCustomer());
-		return "customer/listCustomer";
-
-	}
+	//@RequestMapping("/listarId")
+	//public String listarId(Map<String, Object> model, @ModelAttribute Customer cus) {
+		//cS.listarId(cus.getIdCustomer());
+		//return "customer/listCustomer";
+	//}
 
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, RedirectAttributes objRedir) {
 
 		Customer customer = cS.listarId(id);
 		if (customer == null) {
-			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
-			return "redirect:/customer/list";
+			objRedir.addFlashAttribute("mensaje", "Ocurrira un error");
+			return "customer/editcustomer";
 		} else {
 			model.addAttribute("listaRoles", rS.list());
 			model.addAttribute("customer", customer);
-			return "customer/customer";
+			return "customer/editcustomer";
 		}
 	}
 	
-	@GetMapping("/eliminar/{id}")
-	public String delete(@PathVariable("id") int id) {
+	@RequestMapping("/delete")
+	public String delete(@RequestParam(value="id") Integer id, Model model) {
 
-		cS.delete(id);
-		System.out.println("Registro eliminado");
+		try {
+			if (id != null && id > 0) {
+				cS.delete(id);
+			}
+		} catch (Exception e) {
+			System.out.println("Error al eliminar");
+		}
+		model.addAttribute("listaCustomers", cS.list());
+		return "customer/listCustomer";
+	}
+	
+	@RequestMapping("/search")
+	public String findCustomer(Model model, @ModelAttribute Customer customer) {
+
+		List<Customer> lista;
+		lista = cS.findByNameCustomer(customer.getNameCustomer());
 		
-		return "redirect:/customers/list";
+		model.addAttribute("listaCustomers", lista);
+		return "customer/listCustomer";
 	}
 
 }
