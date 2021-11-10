@@ -118,14 +118,40 @@ public class SavingAccountProductController {
 		afp.setFreeOperationSA(afp.getFreeOperationSA());
 		listSA = sap.findByOp(afp.getFreeOperationSA());
 		model.put("savingaccount", new SavingAccountProduct());
-		
+		if (listSA.isEmpty()) {
+			listSA = sap.fetchProductByName(afp.getProduct().getNameProduct());
+		}
 		if (listSA.isEmpty()) {
 			model.put("mensaje", "No se encontró");
 		}
+		
 		model.put("listaCuentasAhorro", listSA);
 		return "savingaccount/listSavingAccounts";
 	}
-	
+//	@GetMapping("/listFind")
+//	public String listSavingAccountProductFind(Model model) {
+//		try {
+//			model.addAttribute("savingaccount",new SavingAccountProduct());
+//			model.addAttribute("listSavingAccounts",sap.list());
+//		} catch (Exception e) {
+//			model.addAttribute("error",e.getMessage());
+//			// TODO: handle exception
+//		}
+//		return "savingaccount/find";
+//	}
+//	@RequestMapping("/find")
+//	public String find(Map<String, Object> model, @ModelAttribute SavingAccountProduct Sap)throws ParseException{
+//		List<SavingAccountProduct> listSavingAccountProducts;
+//		Sap.getProduct().setNameProduct(Sap.getProduct().getNameProduct());
+//		
+//		listSavingAccountProducts = sap.fetchProductByName(Sap.getProduct().getNameProduct());
+//		if (listSavingAccountProducts.isEmpty()) {
+//			model.put("mensaje", "No se encontro el producto perteneciente a la lista de cuentas de ahorro actual");
+//		}
+//		model.put("listSavingAccountProducts", listSavingAccountProducts);
+//		return "savingaccount/find";
+//		
+//	}
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
 
