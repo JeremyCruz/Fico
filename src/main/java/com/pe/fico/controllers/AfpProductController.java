@@ -105,6 +105,18 @@ public class AfpProductController {
 			return "afp/afp";
 		}
 	}
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
+
+		AfpProduct objPro = aService.listarId(id);
+		if (objPro == null) {
+			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
+			return "redirect:/afps/list";
+		} else {
+			aService.delAfpbyId(id);
+			return "redirect:/afps/list";
+		}
+	}
 	public List<Product> byType() {
 		List<Product> listProduct= new ArrayList<Product>();
 		for (int i = 0; i < pService.list().size(); i++) {
@@ -113,5 +125,20 @@ public class AfpProductController {
 			}
 		}
 		return listProduct;
+	}
+	
+	@RequestMapping("/search")
+	public String findByType(Map<String, Object> model, @ModelAttribute AfpProduct afp) {
+
+		List<AfpProduct> listAfp;
+		afp.setTypeAfp(afp.getTypeAfp());
+		listAfp = aService.findByTypeAfp(afp.getTypeAfp());
+		model.put("afp", new AfpProduct());
+		
+		if (listAfp.isEmpty()) {
+			model.put("mensaje", "No se encontró");
+		}
+		model.put("listaAfp", listAfp);
+		return "afp/listAfps";
 	}
 }

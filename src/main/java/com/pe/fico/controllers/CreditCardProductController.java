@@ -106,6 +106,19 @@ public class CreditCardProductController {
 			return "creditcard/creditcard";
 		}
 	}
+	
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
+
+		CreditCardProduct objPro = cService.listarId(id);
+		if (objPro == null) {
+			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
+			return "redirect:/creditCards/list";
+		} else {
+			cService.delCredbyId(id);
+			return "redirect:/creditCards/list";
+		}
+	}
 
 	public List<Product> byType() {
 		List<Product> listProduct= new ArrayList<Product>();
@@ -117,4 +130,18 @@ public class CreditCardProductController {
 		return listProduct;
 	}
 
+	@RequestMapping("/search")
+	public String findByType(Map<String, Object> model, @ModelAttribute CreditCardProduct card) {
+
+		List<CreditCardProduct> listCard;
+		card.setBenefitCreditCard(card.getBenefitCreditCard());
+		listCard = cService.findByBenefit(card.getBenefitCreditCard());
+		model.put("creditCard", new CreditCardProduct());
+		
+		if (listCard.isEmpty()) {
+			model.put("mensaje", "No se encontró");
+		}
+		model.put("listaTarjetas", listCard);
+		return "creditcard/listCards";
+	}
 }

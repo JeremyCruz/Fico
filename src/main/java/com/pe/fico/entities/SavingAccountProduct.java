@@ -9,13 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
-
 import com.pe.fico.entities.SavingAccountProduct;
 
 @Entity
 @Table(name = "SavingAccountProduct")
-
 public class SavingAccountProduct {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -116,27 +113,4 @@ public class SavingAccountProduct {
 		this.product = product;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + idSavingAccount;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		SavingAccountProduct other = (SavingAccountProduct) obj;
-		if(idSavingAccount != other.idSavingAccount)
-			return false;
-		return true;
-	}
-	
 }
-

@@ -11,4 +11,10 @@ public interface IAfpProductService {
 	List<AfpProduct> list();
 
 	AfpProduct listarId(int idAfp);
+	
+	public void delAfpbyId(int idAfp);
+	
+	List<AfpProduct> findByTypeAfp(String type);
+	
+	
 }

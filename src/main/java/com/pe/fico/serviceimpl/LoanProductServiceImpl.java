@@ -41,5 +41,16 @@ public class LoanProductServiceImpl implements ILoanProductService {
 		Optional<LoanProduct> op = lR.findById(idLoan);
 		return op.isPresent() ? op.get() : new LoanProduct();
 	}
+	
+	@Override
+	public void delLoanbyId(int idAfp) {
+		lR.deleteById(idAfp);
+	}
+
+	@Override
+	public List<LoanProduct> findByCurrency(String currency) {
+		// TODO Auto-generated method stub
+		return lR.findByCurrency(currency);
+	}
 
 }

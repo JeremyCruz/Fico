@@ -12,4 +12,8 @@ public interface ILoanProductService {
 
 	LoanProduct listarId(int idLoan);
 	
+	public void delLoanbyId(int idAfp);
+	
+	List<LoanProduct> findByCurrency(String currency);
+	
 }

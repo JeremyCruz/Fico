@@ -12,4 +12,7 @@ public interface ICreditCardProductService {
 
 	CreditCardProduct listarId(int idProducto);
 	
+	public void delCredbyId(int idAfp);
+	
+	List<CreditCardProduct> findByBenefit(String benefit);
 }

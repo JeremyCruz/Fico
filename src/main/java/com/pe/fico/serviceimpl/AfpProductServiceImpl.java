@@ -41,6 +41,17 @@ public class AfpProductServiceImpl implements IAfpProductService{
 		Optional<AfpProduct> op=aR.findById(idAfp);
 		return op.isPresent()?op.get():new AfpProduct();
 	}
+	
+	@Override
+	public void delAfpbyId(int idAfp) {
+		aR.deleteById(idAfp);
+	}
 
+	@Override
+	public List<AfpProduct> findByTypeAfp(String type){
+		return aR.findByType(type);
+	}
+	
+	
 	
 }

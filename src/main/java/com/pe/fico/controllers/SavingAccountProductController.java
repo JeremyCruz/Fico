@@ -1,7 +1,8 @@
 package com.pe.fico.controllers;
 
-
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -16,19 +17,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import com.pe.fico.entities.Product;
 import com.pe.fico.entities.SavingAccountProduct;
-import com.pe.fico.service.ITypeSavingAccountService;
-import com.pe.fico.service.ISavingAccountProductService;
 import com.pe.fico.service.IProductService;
+import com.pe.fico.service.ISavingAccountService;
+import com.pe.fico.service.ITypeSavingAccountService;
 
-//savingaccount SavingAccountProduct
 @Controller
 @RequestMapping("/savingaccounts")
 public class SavingAccountProductController {
-	
 	@Autowired
-	private ISavingAccountProductService sap;
+	private ISavingAccountService sap;
 	
 	@Autowired
 	private ITypeSavingAccountService tap;
@@ -40,7 +39,7 @@ public class SavingAccountProductController {
 	public String newAccount(Model model) {
 		model.addAttribute("savingaccount", new SavingAccountProduct());
 		model.addAttribute("listaTipoCuentasAhorro", tap.list());
-		model.addAttribute("listaProductos", pService.list());
+		model.addAttribute("listaProductos", byType());
 		model.addAttribute("savingaccount", new SavingAccountProduct());
 		return "savingaccount/savingaccount";
 	}
@@ -61,7 +60,7 @@ public class SavingAccountProductController {
 			throws ParseException {
 		if (binRes.hasErrors()) {
 			model.addAttribute("listaTipoCuentasAhorro", tap.list());
-			model.addAttribute("listaProductos", pService.list());
+			model.addAttribute("listaProductos", byType());
 			return "savingaccount/savingaccount";
 		} else {
 			boolean flag = sap.insert(objSap);
@@ -97,9 +96,46 @@ public class SavingAccountProductController {
 			return "redirect:/savingaccounts/list";
 		} else {
 			model.addAttribute("listaTipoCuentasAhorro", tap.list());
-			model.addAttribute("listaProductos", pService.list());
+			model.addAttribute("listaProductos", byType());
 			model.addAttribute("savingaccount", objSap);
 			return "savingaccount/savingaccount";
+		}
+	}
+	public List<Product> byType() {
+		List<Product> listProduct= new ArrayList<Product>();
+		for (int i = 0; i < pService.list().size(); i++) {
+			if (pService.list().get(i).getCategory().getNameCategoryProduct().equals("Cuenta de Ahorro")) {
+				listProduct.add(pService.list().get(i));
+			}
+		}
+		return listProduct;
+	}
+	
+	@RequestMapping("/search")
+	public String findByType(Map<String, Object> model, @ModelAttribute SavingAccountProduct afp) {
+
+		List<SavingAccountProduct> listSA;
+		afp.setFreeOperationSA(afp.getFreeOperationSA());
+		listSA = sap.findByOp(afp.getFreeOperationSA());
+		model.put("savingaccount", new SavingAccountProduct());
+		
+		if (listSA.isEmpty()) {
+			model.put("mensaje", "No se encontró");
+		}
+		model.put("listaCuentasAhorro", listSA);
+		return "savingaccount/listSavingAccounts";
+	}
+	
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
+
+		SavingAccountProduct objPro = sap.listarId(id);
+		if (objPro == null) {
+			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
+			return "redirect:/savingaccounts/list";
+		} else {
+			sap.delSAbyId(id);
+			return "redirect:/savingaccounts/list";
 		}
 	}
 }

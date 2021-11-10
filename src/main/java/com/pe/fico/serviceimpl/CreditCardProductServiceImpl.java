@@ -41,4 +41,14 @@ public class CreditCardProductServiceImpl implements ICreditCardProductService {
 		return op.isPresent()?op.get():new CreditCardProduct();
 	}
 	
+	@Override
+	public void delCredbyId(int idAfp) {
+		cR.deleteById(idAfp);
+	}
+
+	@Override
+	public List<CreditCardProduct> findByBenefit(String benefit) {
+		// TODO Auto-generated method stub
+		return cR.findByBenefit(benefit);
+	}
 }

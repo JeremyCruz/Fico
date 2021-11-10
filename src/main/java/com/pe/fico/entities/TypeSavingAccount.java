@@ -1,7 +1,5 @@
 package com.pe.fico.entities;
 
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +11,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name="TypeSavingAccount")
 public class TypeSavingAccount {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int idTypeSavingAccount;
@@ -48,24 +47,4 @@ public class TypeSavingAccount {
 	public void setNameTypeSavingAccount(String nameTypeSavingAccount) {
 		this.nameTypeSavingAccount = nameTypeSavingAccount;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(idTypeSavingAccount);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TypeSavingAccount other = (TypeSavingAccount) obj;
-		return idTypeSavingAccount == other.idTypeSavingAccount;
-	}
-	
-	
-
 }

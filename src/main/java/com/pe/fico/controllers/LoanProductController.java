@@ -100,6 +100,18 @@ public class LoanProductController {
 		}
 	}
 
+	@RequestMapping("/delete/{id}")
+	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
+
+		LoanProduct objPro = lService.listarId(id);
+		if (objPro == null) {
+			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
+			return "redirect:/loans/list";
+		} else {
+			lService.delLoanbyId(id);
+			return "redirect:/loans/list";
+		}
+	}
 	public List<Product> byType() {
 		List<Product> listProduct = new ArrayList<Product>();
 		for (int i = 0; i < pService.list().size(); i++) {
@@ -108,5 +120,20 @@ public class LoanProductController {
 			}
 		}
 		return listProduct;
+	}
+	
+	@RequestMapping("/search")
+	public String findByType(Map<String, Object> model, @ModelAttribute LoanProduct loan) {
+
+		List<LoanProduct> listLoan;
+		loan.setCurrencyLoan(loan.getCurrencyLoan());
+		listLoan = lService.findByCurrency(loan.getCurrencyLoan());
+		model.put("loan", new LoanProduct());
+		
+		if (listLoan.isEmpty()) {
+			model.put("mensaje", "No se encontró");
+		}
+		model.put("listaPrestamos", listLoan);
+		return "loan/listLoans";
 	}
 }

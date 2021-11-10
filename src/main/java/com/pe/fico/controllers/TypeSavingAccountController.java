@@ -14,10 +14,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.pe.fico.entities.TypeSavingAccount;
 import com.pe.fico.service.ITypeSavingAccountService;
 
-
 @Controller
 @RequestMapping("/typesavingaccounts")
 public class TypeSavingAccountController {
+
 	@Autowired
 	private ITypeSavingAccountService tService;
 	
