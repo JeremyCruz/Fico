@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -22,21 +23,27 @@
 	<div class="bg row">
 		<div th:replace="fragments/nav :: nav" class="row topbar col-lg-12"></div>
 
-		<div class="content contrainer row col-12">
-			<div class="col-3" style="padding: 30px">
-				<h3>Registrar Cuentas de Ahorro</h3>
+		<div class="content contrainer row col-10">
+
+			<div class="col-3">
+				<h2></h2>
 			</div>
-			<div class="col-6 frm-registro">
+
+			<div style="color: #206A5D; margin: 10px;">
+				<h2>Registrar Cuentas de Ahorro</h2>
+			</div>
+
+			<div class="col-6 frm-registro"
+				style="margin-top: 100px; margin-left: -370px;">
 				<form th:action="@{/savingaccounts/save}" method="post" class="row"
 					th:object="${savingaccount}" enctype="multipart/form-data">
 
-					<div class="col-6">
+					<div class="col-5">
+
 						<div class="form-group">
 							<label for="idrace">ID:</label> <input type="text" readonly
 								class="form-control" th:field="*{idSavingAccount}"></input>
 						</div>
-
-
 
 						<div class="form-group">
 							<label for="rate">CANTIDAD APERTURA MINIMA:</label>
@@ -45,40 +52,41 @@
 									<span class="input-group-text">S/.</span>
 								</div>
 								<input type="number" th:field="*{minOpeningSaving}"
-									class="form-control" id="rate"></input>								
+									class="form-control" id="rate"></input>
 							</div>
 						</div>
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('minOpeningSaving')}"
-							th:errors="*{minOpeningSaving}">
-							</div>
+							th:errors="*{minOpeningSaving}"></div>
 
 						<div class="form-group">
 							<label for="rate">CANTIDAD DE OEPERACIONES GRATUITAS:</label>
 							<div class="input-group mb-3">
 								<input type="number" th:field="*{freeOperationSA}"
-									class="form-control" id="rate"></input>								
+									class="form-control" id="rate"></input>
 							</div>
 						</div>
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('freeOperationSA')}"
-							th:errors="*{freeOperationSA}">
-							</div>
-							
-							<div class="form-group">
+							th:errors="*{freeOperationSA}"></div>
+
+						<div class="form-group">
 							<label for="rate">COSTO DE MANTENIMIENTO:</label>
 							<div class="input-group mb-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">S/.</span>
 								</div>
 								<input type="number" th:field="*{mantCostSA}"
-									class="form-control" id="rate"></input>								
+									class="form-control" id="rate"></input>
 							</div>
 						</div>
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('mantCostSA')}"
-							th:errors="*{mantCostSA}">
-							</div>
+							th:errors="*{mantCostSA}"></div>
+
+					</div>
+
+					<div class="col-5">
 
 						<div class="form-group">
 							<label for="rating">ES FONDO SEGURO</label> <input type="number"
@@ -87,11 +95,7 @@
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('secureFounSA')}"
 							th:errors="*{secureFounSA}"></div>
-							
-					</div>
 
-
-					<div class="col-6">
 						<div class="form-group">
 							<label for="typesavingaccount">TIPO:</label> <select
 								class="form-control" th:field="*{tsa.idTypeSavingAccount}">
@@ -102,27 +106,23 @@
 							</select>
 						</div>
 
-
-
 						<div class="form-group">
 							<label for="product">PRODUCTO</label> <select
 								class="form-control" th:field="*{product.idProduct}">
-								<option th:each="p: ${listaProductos}"
-									th:value="${p.idProduct}" 
+								<option th:each="p: ${listaProductos}" th:value="${p.idProduct}"
 									th:text="${p.nameProduct}"
 									th:selected="(${p.idProduct} == *{product.idProduct})"></option>
 							</select>
 						</div>
 
-
-
-
-
 					</div>
 
-					<button style="margin: 0px 20px 0px 15px;" type="submit"
-						class="btnadd btn btn-primary">Aceptar</button>
-					<a href="/savingaccounts/list" class="btn btn-danger">Cancelar</a>
+					<div style="margin-left: 215px;">
+						<button style="margin: 10px; background: #206A5D" type="submit"
+							class="btn btn-outline-light">Aceptar</button>
+						<a href="/savingaccounts/list" class="btn btn-outline-dark">Cancelar</a>
+					</div>
+
 				</form>
 
 				<div th:if="${mensaje}" class="alert alert-danger">

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -22,15 +23,23 @@
 	<div class="bg row">
 		<div th:replace="fragments/nav :: nav" class="row topbar col-lg-12"></div>
 
-		<div class="content contrainer row col-12">
-			<div class="col-3" style="padding: 30px">
-				<h3>Registrar AFP</h3>
+		<div class="content contrainer row col-10">
+
+			<div class="col-3">
+				<h2></h2>
 			</div>
-			<div class="col-6 frm-registro">
-				<form th:action="@{/Afps/save}" method="post" class="row"
+
+			<div align="center" style="color: #206A5D; margin: 10px">
+				<h2>Registrar AFP</h2>
+			</div>
+
+			<div class="col-6 frm-registro"
+				style="margin-top: 100px; margin-left: -150px;">
+
+				<form th:action="@{/afps/save}" method="post" class="row"
 					th:object="${afp}" enctype="multipart/form-data">
 
-					<div class="col-6">
+					<div class="col-5">
 
 						<div class="form-group">
 							<label for="idrace">ID:</label> <input type="text" readonly
@@ -46,34 +55,33 @@
 							</select>
 						</div>
 
+					</div>
+
+					<div class="col-5">
+
 						<div class="form-group">
-							<label for="method">Metodo de Comision</label> <select class="form-control"
-								th:field="*{methodcomition.idMethod}">
+							<label for="method">Metodo de Comision</label> <select
+								class="form-control" th:field="*{methodcomition.idMethod}">
 								<option th:each="s: ${listaMetodos}" th:value="${s.idMethod}"
 									th:text="${s.nameMethodAFP}"
 									th:selected="(${s.idMethod} == *{methodcomition.idMethod})"></option>
 							</select>
 						</div>
 
-					</div>
-
-					<div class="col-6">
-
-
 						<div class="form-group">
 							<label for="type">TIPO DE FONDO:</label> <input type="text"
-								required th:field="*{typeAfp}" class="form-control"
-								id="type"></input>
+								required th:field="*{typeAfp}" class="form-control" id="type"></input>
 						</div>
 						<div class="alert alert-danger"
-							th:if="${#fields.hasErrors('typeAfp')}"
-							th:errors="*{typeAfp}"></div>
-
+							th:if="${#fields.hasErrors('typeAfp')}" th:errors="*{typeAfp}"></div>
 					</div>
 
-					<button style="margin: 0px 20px 0px 15px;" type="submit"
-						class="btnadd btn btn-primary">Aceptar</button>
-					<a href="/afps/list" class="btn btn-danger">Cancelar</a>
+					<div style="margin-left: 210px;">
+						<button style="margin: 10px; background: #206A5D" type="submit"
+							class="btn btn-outline-light">Aceptar</button>
+						<a href="/afps/list" class="btn btn-outline-dark">Cancelar</a>
+					</div>
+
 				</form>
 
 				<div th:if="${mensaje}" class="alert alert-danger">

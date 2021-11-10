@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -26,33 +27,55 @@
 		<div class="content container">
 
 			<div class="d-flex">
-				<h3 class="title-content">Lista de Cuentas de ahorro</h3>
-				<a th:href="@{/savingaccounts/new}" class="btnnew btn btn-warning">Nuevo</a>
+				<h3 class="title-content" style="color: #206A5D;">Lista de
+					Cuentas de ahorro</h3>
+
+				<form th:action="@{/savingaccounts/search}" method="post"
+					th:object="${savingaccount}" style="margin-bottom: 20px;">
+
+					<label for="bus">Buscar:</label><input type="number"
+						required="required" class="form-control"
+						th:field="*{freeOperationSA}" id="bus"></input>
+
+					<div style="margin-top: 5px;">
+						<button type="submit" class="btn btn-outline-dark">Buscar</button>
+						<a href="/savingaccounts/list" class="btn btn-outline-dark">Limpiar</a>
+					</div>
+				</form>
+
+				<a th:href="@{/savingaccounts/new}" class="btn btn-outline-light"
+					style="margin: 10px; background: #206A5D">Nuevo</a>
 			</div>
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
 						<th scope="col" class="text-center">ID</th>
-						<th scope="col" class="text-center">CANTIDAD APERTURA MINIMA</th>
-						<th scope="col" class="text-center">CANTIDAD DE OEPERACIONES GRATUITAS</th>
-						<th scope="col" class="text-center">COSTO DE MANTENIMIENTO</th>
+						<th scope="col" class="text-center">MIN</th>
+						<th scope="col" class="text-center">OPERACIONES FREE</th>
+						<th scope="col" class="text-center">MANTENIMIENTO</th>
 						<th scope="col" class="text-center">FONDO SEGURO</th>
 						<th scope="col" class="text-center">TIPO</th>
 						<th scope="col" class="text-center">PRODUCTO</th>
+						<th scope="col" class="text-center">MODIFICAR</th>
+						<th scope="col" class="text-center">ELIMINAR</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="sa: ${listaCuentasAhorro}">
 						<td class="text-center" th:text="${sa.idSavingAccount}"></td>
 						<td class="text-center" th:text="${sa.minOpeningSaving}"></td>
-						<td class="text-center" th:text="${sa.secureFounSA}"></td>
+
 						<td class="text-center" th:text="${sa.freeOperationSA}"></td>
 						<td class="text-center" th:text="${sa.mantCostSA}"></td>
+						<td class="text-center" th:text="${sa.secureFounSA}"></td>
 						<td class="text-center" th:text="${sa.tsa.nameTypeSavingAccount}"></td>
 						<td class="text-center" th:text="${sa.product.nameProduct}"></td>
 						<td class="text-center"><a
 							th:href="@{'/savingaccounts/update/' + ${sa.idSavingAccount}}"><i
-								class="fa fa-edit" style="color: rgb(240, 184, 15) ing;"></i></a></td>
+								class="fa fa-edit" style="color: #206A5D;"></i></a></td>
+						<td class="text-center"><a
+							th:href="@{'/savingaccounts/delete/' + ${sa.idSavingAccount}}"><i
+								class="fa fa-times-circle" style="color: #206A5D;"></i></a></td>
 					</tr>
 				</tbody>
 			</table>

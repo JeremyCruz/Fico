@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -22,15 +23,22 @@
 	<div class="bg row">
 		<div th:replace="fragments/nav :: nav" class="row topbar col-lg-12"></div>
 
-		<div class="content contrainer row col-12">
-			<div class="col-3" style="padding: 30px">
-				<h3>Registrar Prestamo</h3>
+		<div class="content contrainer row col-10">
+
+			<div class="col-3">
+				<h2></h2>
 			</div>
-			<div class="col-6 frm-registro">
+
+			<div style="color: #206A5D; margin: 10px;">
+				<h2>Registrar Prestamo</h2>
+			</div>
+
+			<div class="col-6 frm-registro"
+				style="margin-top: 100px; margin-left: -220px;">
 				<form th:action="@{/loans/save}" method="post" class="row"
 					th:object="${loan}" enctype="multipart/form-data">
 
-					<div class="col-6">
+					<div class="col-5">
 
 						<div class="form-group">
 							<label for="idrace">ID:</label> <input type="text" readonly
@@ -45,10 +53,6 @@
 									th:selected="(${c.idProduct} == *{product.idProduct})"></option>
 							</select>
 						</div>
-					</div>
-
-					<div class="col-6">
-
 
 						<div class="form-group">
 							<label for="type">TIPO PRODUCTO:</label> <input type="text"
@@ -56,6 +60,11 @@
 						</div>
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('typeLoan')}" th:errors="*{typeLoan}"></div>
+
+
+					</div>
+
+					<div class="col-5">
 
 						<div class="form-group">
 							<label for="currency">MONEDA:</label> <input type="text" required
@@ -65,7 +74,6 @@
 							th:if="${#fields.hasErrors('currencyLoan')}"
 							th:errors="*{currencyLoan}"></div>
 
-
 						<div class="form-group">
 							<label for="minAmount">MIN APERTURA:</label>
 							<div class="input-group mb-3">
@@ -74,13 +82,12 @@
 								</div>
 								<input type="number" th:field="*{minAmountLoan}"
 									class="form-control" id="minAmount"></input>
-
 							</div>
 						</div>
 						<div class="alert alert-danger"
 							th:if="${#fields.hasErrors('minAmountLoan')}"
 							th:errors="*{minAmountLoan}"></div>
-							
+
 						<div class="form-group">
 							<label for="maxAmount">MAX APERTURA:</label>
 							<div class="input-group mb-3">
@@ -96,10 +103,12 @@
 							th:if="${#fields.hasErrors('maxAmountLoan')}"
 							th:errors="*{maxAmountLoan}"></div>
 					</div>
+					<div style="margin-left: 210px;">
+						<button style="margin: 10px; background: #206A5D" type="submit"
+							class="btn btn-outline-light">Aceptar</button>
+						<a href="/loans/list" class="btn btn-outline-dark">Cancelar</a>
+					</div>
 
-					<button style="margin: 0px 20px 0px 15px;" type="submit"
-						class="btnadd btn btn-primary">Aceptar</button>
-					<a href="/loans/list" class="btn btn-danger">Cancelar</a>
 				</form>
 
 				<div th:if="${mensaje}" class="alert alert-danger">

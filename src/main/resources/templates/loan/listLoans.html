@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 <meta charset="UTF-8">
@@ -26,8 +27,23 @@
 		<div class="content container">
 
 			<div class="d-flex">
-				<h3 class="title-content">Lista de Prestamos</h3>
-				<a th:href="@{/loans/new}" class="btnnew btn btn-warning">Nuevo</a>
+				<h3 class="title-content" style="color: #206A5D;">Lista de Prestamos</h3>
+				
+				<form th:action="@{/loans/search}" method="post" th:object="${loan}"
+					style="margin-bottom: 20px;">
+
+					<label for="bus">Buscar:</label><input type="text"
+						required="required" class="form-control" th:field="*{currencyLoan}"
+						id="bus"></input>
+
+					<div style="margin-top: 5px;">
+						<button type="submit" class="btn btn-outline-dark">Buscar</button>
+						<a href="/loans/list" class="btn btn-outline-dark">Limpiar</a>
+					</div>
+				</form>
+				
+				<a th:href="@{/loans/new}" class="btn btn-outline-light"
+					style="margin: 10px; background: #206A5D">Nuevo</a>
 			</div>
 			<table class="table">
 				<thead class="thead-light">
@@ -38,7 +54,8 @@
 						<th scope="col" class="text-center">MONEDA</th>
 						<th scope="col" class="text-center">MIN APERTURA</th>
 						<th scope="col" class="text-center">MAX APERTURA</th>
-						<th scope="col" class="text-center">OPERACIÓN</th>
+						<th scope="col" class="text-center">MODIFICAR</th>
+						<th scope="col" class="text-center">BORRAR</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -51,7 +68,10 @@
 						<td class="text-center" th:text="${p.maxAmountLoan}"></td>
 						<td class="text-center"><a
 							th:href="@{'/loans/update/' + ${p.idLoanPoduct}}"><i
-								class="fa fa-edit" style="color: rgb(240, 184, 15) ing;"></i></a></td>
+								class="fa fa-edit" style="color: #206A5D;"></i></a></td>
+						<td class="text-center"><a
+							th:href="@{'/loans/delete/' + ${p.idLoanPoduct}}"><i
+								class="fa fa-times-circle" style="color: #206A5D;"></i></a></td>
 					</tr>
 				</tbody>
 			</table>
