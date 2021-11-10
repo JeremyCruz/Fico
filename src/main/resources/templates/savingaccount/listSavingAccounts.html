@@ -33,9 +33,12 @@
 				<form th:action="@{/savingaccounts/search}" method="post"
 					th:object="${savingaccount}" style="margin-bottom: 20px;">
 
-					<label for="bus">Buscar:</label><input type="number"
+<!-- 	                    <label for="bus">Buscar:</label><input type="number" -->
+<!-- 						required="required" class="form-control" -->
+<!-- 						th:field="*{freeOperationSA}" id="bus"></input> -->
+					<label for="bus">Buscar cuenta de ahorro por nombre de producto:</label><input type="text"
 						required="required" class="form-control"
-						th:field="*{freeOperationSA}" id="bus"></input>
+						th:field="*{product.nameProduct}" id="bus"></input>
 
 					<div style="margin-top: 5px;">
 						<button type="submit" class="btn btn-outline-dark">Buscar</button>

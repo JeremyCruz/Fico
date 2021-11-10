@@ -113,19 +113,20 @@ public class SavingAccountProductController {
 	
 	@RequestMapping("/search")
 	public String findByType(Map<String, Object> model, @ModelAttribute SavingAccountProduct afp) {
-
+		System.out.println(afp.getProduct().getNameProduct()); 
 		List<SavingAccountProduct> listSA;
-		afp.setFreeOperationSA(afp.getFreeOperationSA());
-		listSA = sap.findByOp(afp.getFreeOperationSA());
+//		afp.setFreeOperationSA(afp.getFreeOperationSA());
+//		listSA = sap.findByOp(afp.getFreeOperationSA());
+//		model.put("savingaccount", new SavingAccountProduct());	
+		afp.getProduct().setNameProduct(afp.getProduct().getNameProduct());
+		listSA = sap.fetchProductByName(afp.getProduct().getNameProduct());
 		model.put("savingaccount", new SavingAccountProduct());
-		if (listSA.isEmpty()) {
-			listSA = sap.fetchProductByName(afp.getProduct().getNameProduct());
-		}
 		if (listSA.isEmpty()) {
 			model.put("mensaje", "No se encontró");
 		}
 		
 		model.put("listaCuentasAhorro", listSA);
+		System.out.println("hola"+listSA);
 		return "savingaccount/listSavingAccounts";
 	}
 //	@GetMapping("/listFind")
