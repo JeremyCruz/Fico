@@ -1,5 +1,7 @@
 package com.pe.fico.repositories;
 
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +14,6 @@ public interface IInstitutionRepository extends JpaRepository<Institution, Integ
 
 	@Query("select count(c.nameInstitution) from Institution c where c.nameInstitution=:clave")
 	public int searchInstitution(@Param("clave") String name);
+	
+	
 }

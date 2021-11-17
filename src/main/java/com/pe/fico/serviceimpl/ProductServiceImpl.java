@@ -40,4 +40,10 @@ public class ProductServiceImpl implements IProductService {
 		return op.isPresent() ? op.get() : new Product();
 	}
 
+	@Override
+	public List<String[]> prodXinstXcat() {
+		// TODO Auto-generated method stub
+		return pR.prodXcatXinst();
+	}
+
 }

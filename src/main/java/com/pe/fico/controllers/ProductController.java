@@ -101,4 +101,10 @@ public class ProductController {
 		}
 	}
 
+	@RequestMapping("/reporte1")
+	public String productXinstitutionXcat (Map<String, Object> model){
+		
+		model.put("listProdxInst", pService.prodXinstXcat());
+		return "reports/productosOrdenados";
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,7 @@ import com.pe.fico.service.IUserService;
 
 @Controller
 @RequestMapping("users")
+@Secured("ROLE_ADMIN")
 public class UserController {
 
 	@Autowired
@@ -61,9 +63,12 @@ public class UserController {
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status)
 			throws ParseException {
 		if (result.hasErrors()) {
+			//Verificar
+			model.addAttribute("user", new Users());
 			return "user/user";
 		} else {
 			String bcryptPassword = passwordE.encode(user.getPassword());
+			//verificar model.addAttribute("user", new Users());
 			user.setPassword(bcryptPassword);
 			int rpta = uS.insert(user);
 			if (rpta > 0) {

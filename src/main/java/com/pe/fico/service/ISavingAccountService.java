@@ -14,6 +14,4 @@ public interface ISavingAccountService {
 	public void delSAbyId(int idSA);
 	
 	List<SavingAccountProduct> findByOp(int op);
-
-	List<SavingAccountProduct> fetchProductByName(String nameProduct);
 }

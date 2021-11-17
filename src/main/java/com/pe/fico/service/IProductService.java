@@ -11,4 +11,6 @@ public interface IProductService {
 	List<Product> list();
 
 	Product listarId(int idProducto);
+	
+	public List<String[]> prodXinstXcat();
 }

@@ -69,7 +69,7 @@ public class CreditCardProductController {
 		} else {
 			boolean flag = cService.insert(objPro);
 			if (flag) {
-				return "redirect:/creditCards/list";
+				return "redirect:/creditCards/new";
 			} else {
 				model.addAttribute("mensaje", "Ocurrió un error");
 				return "redirect:/creditCards/new";
