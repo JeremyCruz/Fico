@@ -1,11 +1,11 @@
 package com.pe.fico.controllers;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,6 @@ import com.pe.fico.service.IUserService;
 
 @Controller
 @RequestMapping("roles")
-@Secured("ROLE_ADMIN")
 public class RoleController {
 
 	@Autowired
@@ -93,5 +92,18 @@ public class RoleController {
 			model.addAttribute("role", role);
 			return "role/role";
 		}
+	}
+	
+	@RequestMapping("/reportes")
+	public String listReports(Model model) {
+		
+		return "reports/reports";
+	}
+		
+	@RequestMapping("/reporte1")
+	public String rolXedad(Map<String, Object> model) {
+
+		model.put("listRolXedad", rS.rolXedad());
+		return "reports/rolesXedad";
 	}
 }
