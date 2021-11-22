@@ -89,7 +89,7 @@ public class SavingAccountProductController {
 
 	@RequestMapping("/update/{id}")
 	public String update(@PathVariable int id, Model model, RedirectAttributes objRedir) {
-
+		
 		SavingAccountProduct objSap = sap.listarId(id);
 		if (objSap == null) {
 			objRedir.addFlashAttribute("mensaje", "OcurriÃ³ un error");
@@ -112,20 +112,65 @@ public class SavingAccountProductController {
 	}
 	
 	@RequestMapping("/search")
-	public String findByType(Map<String, Object> model, @ModelAttribute SavingAccountProduct afp) {
-
-		List<SavingAccountProduct> listSA;
-		afp.setFreeOperationSA(afp.getFreeOperationSA());
-		listSA = sap.findByOp(afp.getFreeOperationSA());
-		model.put("savingaccount", new SavingAccountProduct());
+	public String findByType(Map<String, Object> model, @ModelAttribute SavingAccountProduct afp)throws ParseException {
 		
+		
+//		System.out.println(afp.getProduct().getNameProduct()); 
+		List<SavingAccountProduct> listSA;
+		System.out.println(afp.getTsa().getNameTypeSavingAccount());
+//		afp.setFreeOperationSA(afp.getFreeOperationSA());
+//		listSA = sap.findByOp(afp.getFreeOperationSA());
+//		model.put("savingaccount", new SavingAccountProduct());	
+		afp.getTsa().setNameTypeSavingAccount(afp.getTsa().getNameTypeSavingAccount());
+		listSA = sap.fetchProductByTipo(afp.getTsa().getNameTypeSavingAccount());
+		model.put("savingaccount", new SavingAccountProduct());
 		if (listSA.isEmpty()) {
 			model.put("mensaje", "No se encontró");
 		}
+		
 		model.put("listaCuentasAhorro", listSA);
+//		System.out.println("hola"+listSA);
 		return "savingaccount/listSavingAccounts";
 	}
-	
+	@RequestMapping("/bestproducts")
+	public String listBestProducts(Map<String, Object> model,@ModelAttribute SavingAccountProduct afp)throws ParseException {	
+		
+		
+		List<SavingAccountProduct> listSA;
+		listSA = sap.getBestProducts();
+		System.out.println(listSA); 
+			model.put("savingaccount", new SavingAccountProduct());
+			if(listSA.isEmpty()) 
+			{
+				model.put("mensaje", "No se encontraron productos");
+			}
+			model.put("listaMejoresProductos", listSA);
+		return "savingaccount/listBestProducts";
+	}
+//	@GetMapping("/listFind")
+//	public String listSavingAccountProductFind(Model model) {
+//		try {
+//			model.addAttribute("savingaccount",new SavingAccountProduct());
+//			model.addAttribute("listSavingAccounts",sap.list());
+//		} catch (Exception e) {
+//			model.addAttribute("error",e.getMessage());
+//			// TODO: handle exception
+//		}
+//		return "savingaccount/find";
+//	}
+//	@RequestMapping("/find")
+//	public String find(Map<String, Object> model, @ModelAttribute SavingAccountProduct Sap)throws ParseException{
+//		List<SavingAccountProduct> listSavingAccountProducts;
+//		Sap.getProduct().setNameProduct(Sap.getProduct().getNameProduct());
+//		
+//		listSavingAccountProducts = sap.fetchProductByName(Sap.getProduct().getNameProduct());
+//		if (listSavingAccountProducts.isEmpty()) {
+//			model.put("mensaje", "No se encontro el producto perteneciente a la lista de cuentas de ahorro actual");
+//		}
+//		model.put("listSavingAccountProducts", listSavingAccountProducts);
+//		return "savingaccount/find";
+//		
+//	}
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable int id, Model model, RedirectAttributes objRedir) {
 
