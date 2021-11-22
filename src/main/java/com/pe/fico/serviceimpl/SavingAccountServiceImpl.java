@@ -50,5 +50,24 @@ public class SavingAccountServiceImpl implements ISavingAccountService {
 		// TODO Auto-generated method stub
 		return sA.findByOper(op);
 	}
+	@Override
+	public List<SavingAccountProduct> fetchProductByName(String nameProduct) {
+		// TODO Auto-generated method stub
+		return sA.fetchProductByName(nameProduct);
+	}
+
+	@Override
+	public List<SavingAccountProduct> fetchProductByTipo(String Tipo) {
+		// TODO Auto-generated method stub
+		return sA.fetchProductByTipo(Tipo);
+	}
+
+	@Override
+	public List<SavingAccountProduct> getBestProducts() {
+		// TODO Auto-generated method stub
+		return sA.fetchBestProducts();
+	}
+
+
 	
 }
