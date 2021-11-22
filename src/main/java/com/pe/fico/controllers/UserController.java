@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+//import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +33,7 @@ import com.pe.fico.service.IUserService;
 
 @Controller
 @RequestMapping("users")
-@Secured("ROLE_ADMIN")
+//@Secured("ROLE_ADMIN")
 public class UserController {
 
 	@Autowired
@@ -52,6 +52,14 @@ public class UserController {
 		model.addAttribute("listaUsuarios", uS.list());
 		return "user/user";
 	}
+	
+	@GetMapping("/registro")
+	public String negistro(Model model) {
+
+		model.addAttribute("user", new Users());
+		model.addAttribute("listaUsuarios", uS.list());
+		return "registro";
+	}
 
 	@GetMapping("/home")
 	public String newHome(Model model) {
@@ -62,13 +70,12 @@ public class UserController {
 	public String saveUser(@ModelAttribute @Valid Users user, BindingResult result, Model model,
 			@RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status)
 			throws ParseException {
+		model.addAttribute("user", new Users());
 		if (result.hasErrors()) {
-			//Verificar
-			model.addAttribute("user", new Users());
 			return "user/user";
 		} else {
+			model.addAttribute("user", new Users());
 			String bcryptPassword = passwordE.encode(user.getPassword());
-			//verificar model.addAttribute("user", new Users());
 			user.setPassword(bcryptPassword);
 			int rpta = uS.insert(user);
 			if (rpta > 0) {
@@ -97,13 +104,13 @@ public class UserController {
 			}
 			boolean flag = uS.insertboo(user);
 			if (flag) {
-				return "redirect:/users/list";
+				return "login";
 			} else {
 				model.addAttribute("mensaje", "Ocurrió un error");
 			}
 		}
 		model.addAttribute("listaUsuarios", uS.list());
-		return "user/listUser";
+		return "login";
 	}
 
 	@GetMapping("/list")
@@ -193,5 +200,21 @@ public class UserController {
 		}
 		model.put("listaUsuarios", listUsers);
 		return "user/listUser";
+	}
+	
+	@GetMapping(value = "/profile/{username}")
+	public String viewprofile(@PathVariable(value = "username")String name, Map<String, Object> model, RedirectAttributes flash) {
+
+		Users user = uS.listName(name);
+
+		if (user == null) {
+			flash.addFlashAttribute("error", "El registro no existe en la base de datos");
+			return "user/listUser";
+		}
+
+		model.put("user", user);
+		model.put("titulo", "Detalle de registro: " + user.getName());
+
+		return "user/ver";
 	}
 }
